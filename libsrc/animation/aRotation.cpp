@@ -1071,7 +1071,11 @@ void quat::FromRotation(const mat3& rot)
 	mQ[VW] = 0.0; mQ[VX] = 1.0; mQ[VY] = 0.0;  mQ[VZ] = 0.0;
 
 	//TODO: student implementation for converting from rotation matrix to quat goes here
-
+	mQ[VW] = sqrt(1.0 + rot[0][0] + rot[1][1] + rot[2][2]) / 2.0;
+	double w4 = (4.0 * mQ[VW]);
+	mQ[VX] = (rot[2][1] - rot[1][2]) / w4;
+	mQ[VY] = (rot[0][2] - rot[2][0]) / w4;
+	mQ[VZ] = (rot[1][0] - rot[0][1]) / w4;
 	Normalize();
 }
 
