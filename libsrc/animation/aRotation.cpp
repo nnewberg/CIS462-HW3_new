@@ -1083,7 +1083,7 @@ quat quat::Slerp(const quat& q0, const quat& q1, double u)
 {
 	quat q = q0;
 	//TODO: student implemetation of Slerp goes here
-	double omega = Dot(q0, q1);
+	double omega = acos(Dot(q0, q1));
 	q = (sin((1 - u)*omega)*q0) / sin(omega)
 		+ (sin(omega*u)*q1) / sin(omega);
 
@@ -1093,6 +1093,7 @@ quat quat::SDouble(const quat& a, const quat& b)
 {
 	quat q = a;
 	//TODO: student implementation ofSDouble goes here
+	q = 2 * Dot(a, b)*b - a;
 
 	return q.Normalize();
 }
@@ -1101,7 +1102,7 @@ quat quat::SBisect(const quat& a, const quat& b)
 {
 	quat q = a;
 	//TODO: student implementation of SBisect goes here
-
+	q = (a + b) / ((a + b).Length());
 
 	return q.Normalize();
 }
@@ -1112,6 +1113,17 @@ quat quat::Scubic(const quat& b0, const quat& b1, const quat& b2, const quat& b3
 	quat result = b0;
 	quat b01, b11, b21, b02, b12, b03;
 	// TODO: Return the result of Scubic based on the cubic quaternion curve control points b0, b1, b2 and b3
+	//Level 1
+	b01 = Slerp(b0, b1, u);
+	b11 = Slerp(b1, b2, u);
+	b21 = Slerp(b2, b3, u);
+	//Level 2
+	b02 = Slerp(b01, b11, u);
+	b12 = Slerp(b11, b21, u);
+	//Level 3
+	b03 = Slerp(b02, b12, u);
+
+	result = b03;
 
 	return result.Normalize(); // result should be of unit length
 }
