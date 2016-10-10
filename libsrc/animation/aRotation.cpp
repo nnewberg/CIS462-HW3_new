@@ -1216,6 +1216,11 @@ void quat::FromAxisAngle(const vec3& axis, double angleRad)
 {
 	//TODO: student implementation for converting from axis/angle to quaternion goes here
 	mQ[VW] = 0.0; mQ[VX] = 1.0; mQ[VY] = 0.0;  mQ[VZ] = 0.0;
+	double s = sin(angleRad / 2);
+	mQ[VX] = axis[VX] * s;
+	mQ[VY] = axis[VY] * s;
+	mQ[VZ] = axis[VZ] * s;
+	mQ[VW] = cos(angleRad / 2);
 }
 
 mat3 quat::ToRotation() const
