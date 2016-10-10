@@ -136,10 +136,12 @@ quat ASplineQuat::getLinearValue(double t)
 	quat q;
 
 	int segment = getCurveSegment(t);
-
 	// TODO: student implementation goes here
-	// compute the value of a linear quaternion spline at the value of t using slerp
-
+	quat startQuat = mKeys[segment].second;
+	quat endQuat = mKeys[segment + 1].second;
+	double u = (t - mKeys[segment].first) / (mKeys[segment + 1].first - mKeys[segment].first);
+	// compute the value of a linear quaternion spline at the value of t using F
+	q = quat::Slerp(startQuat, endQuat, u);
 	return q;
 
 	

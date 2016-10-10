@@ -1083,6 +1083,9 @@ quat quat::Slerp(const quat& q0, const quat& q1, double u)
 {
 	quat q = q0;
 	//TODO: student implemetation of Slerp goes here
+	double omega = Dot(q0, q1);
+	q = (sin((1 - u)*omega)*q0) / sin(omega)
+		+ (sin(omega*u)*q1) / sin(omega);
 
 	return q.Normalize();
 }
