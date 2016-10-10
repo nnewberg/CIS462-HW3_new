@@ -1197,7 +1197,19 @@ void quat::ToAxisAngle(vec3& axis, double& angleRad) const
 	axis = vec3(1.0, 0.0, 0.0);
 	angleRad = 0.0;
 	//TODO: student implementation for converting quaternion to axis/angle representation goes here
-
+	angleRad = 2 * acos(mQ[VW]);
+	double s = sqrt(1 - mQ[VW]* mQ[VW]); // assuming quaternion normalised then w is less than 1, so term always positive.
+	if (s < 0.001) { // test to avoid divide by zero, s is always positive due to sqrt
+					 // if s close to zero then direction of axis not important
+		axis[VX] = mQ[VX]; // if it is important that axis is normalised then replace with x=1; y=z=0;
+		axis[VY] = mQ[VY];
+		axis[VZ] = mQ[VZ];
+	}
+	else {
+		axis[VX] = mQ[VX]/s;
+		axis[VY] = mQ[VY]/s;
+		axis[VZ] = mQ[VZ]/s;
+	}
 }
 
 void quat::FromAxisAngle(const vec3& axis, double angleRad)
