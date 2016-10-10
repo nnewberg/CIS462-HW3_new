@@ -140,8 +140,8 @@ void ASplineQuat::computeControlPoints(quat& startQuat, quat& endQuat)
 		quat qi1s = quat::SBisect(qi1p, q1);
 
 		b0 = q0;
-		b1 = quat::Slerp(q0, qi1s, (1 / 3));
-		b2 = quat::Slerp(q1, qis, (1 / 3));
+		b1 = quat::Slerp(q0, qi1s, (1 / 3.0));
+		b2 = quat::Slerp(q1, qis, (1 / 3.0));
 		b3 = q1;
 
 		mCtrlPoints.push_back(b0);
